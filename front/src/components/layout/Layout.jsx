@@ -4,7 +4,7 @@ import SecondNavbar from './SecondNavbar';
 
 const Layout = () => {
     return (
-        <div className='mb-16 min-w-screen'>
+        <div className='mb-12 min-w-screen font-mono'>
             <Navbar />
             <SecondNavbar />
         </div>
