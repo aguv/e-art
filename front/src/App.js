@@ -5,13 +5,14 @@ import Layout from './components/layout/Layout';
 import SingleView from './components/SingleView';
 import HomePage from './components/HomePage';
 import Artwork from "../src/abis/Artwork.json"
-
+import PopupForm from './components/PopupForm';
 
 function App() {
   const [account, setAccount] = useState("")
   const [contract, setContract] = useState(null)
   const [artworks, setArtowrks] = useState([])
   const [totalSupply, setTotalSupply] = useState(0)
+  const [popup, setPopup] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -59,6 +60,10 @@ function App() {
     }
   }
 
+  const handlePopup = () => {
+    setPopup(popUp => !popUp);
+  }
+
   const mint = (artwork) => {
     contract.methods.mint(artwork).send({ from: account })
       .once('receipt', (receipt) => {
@@ -67,8 +72,9 @@ function App() {
   }
 
   return (
-    <div className='bg-secondary w-auto min-h-screen'>
-      <Layout />
+    <div className='bg-secondary w-auto min-h-full pb-20'>
+      <Layout handlePopup={handlePopup} />
+      {popup ? <PopupForm handlePopup={handlePopup} /> : null}
       <Switch>
         <Route path='/product/:id' render={({ match }) => <SingleView id={match.params.id} />} />
         <Route path='/' exact render={() => <HomePage mint={mint} />} />

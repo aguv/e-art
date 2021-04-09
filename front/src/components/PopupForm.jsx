@@ -1,7 +1,8 @@
 import React, { useState } from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
-const Popup = ({props}) => {
-    const [popup, setPopup] = useState(true)
+const Popup = ({ handlePopup }) => {
     const [selectedFile, setSelectedFile] = useState(null)
 
 
@@ -15,23 +16,29 @@ const Popup = ({props}) => {
         this.props.mint(selectedFile)
     }
 
-    return (popup) ? (
-        <div className="popup">
-            <div className="popup-inner">
-                <div className="popup-form">
-                    <h3>Submit a token</h3>
-                    <form onSubmit={fileSubmitHandler}>
-                        <input type="text" placeholder="Title"></input>
-                        <input type="text" placeholder="Address"></input>
-                        <input tyoe="text" placeholder="Price"></input>
-                        <input type="file" onChange={fileSelectedHandler} />
-                        <button onClick={() => setPopup(false)} className="close-btn">Return</button>
-                        <button className="submit-btn" type="submit">Submit</button>
-                    </form>
+    return (
+        <div className="absolute right-10 border-4 border-gray-400 rounded-md p-6 bg-gray-300 font-mono shadow-lg">
+            <div className='flex flex-col popup'>
+                <div className='flex justify-between'>
+                    <h3 className=''>Submit a token</h3>
+                    <button onClick={handlePopup}>
+                        <FontAwesomeIcon icon={faTimes} className='w-12 text-red-500'/>
+                    </button>
                 </div>
+                <hr className='border-gray-400'/>
+                <form className='flex flex-col flex-1 justify-between'>
+                    <div className='flex flex-col flex-1 justify-around'>
+                        <input type="text" placeholder="Title" className='p-2 border-2 border-gray-400 rounded-md'></input>
+                        <input type="text" placeholder="Address" className='p-2 border-2 border-gray-400 rounded-md'></input>
+                        <input tyoe="text" placeholder="Price" className='p-2 border-2 border-gray-400 rounded-md'></input>
+                        <input type="file" onChange={fileSelectedHandler} />
+                    </div>
+                    <hr className='border-gray-400'/>
+                    <button type="submit" className="border-2 mt-4 border-gray-700 bg-red-400 p-2 rounded-md hover:bg-green-600 hover:text-gray-100">Submit</button>
+                </form>
             </div>
         </div>
-    ) : "";
+    )
 }
 
 export default Popup

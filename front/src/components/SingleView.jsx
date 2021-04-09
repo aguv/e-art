@@ -4,7 +4,7 @@ import { faEthereum } from '@fortawesome/free-brands-svg-icons'
 
 const SingleView = () => {
     return (
-        <div className='bg-gray-300 w-6/12 h-screen mx-auto flex flex-col items-center p-4 mb-20 font-mono border-solid border-4 border-gray-400 rounded-sm myshadow' >
+        <div className='bg-gray-300 w-6/12 h-screen mx-auto flex flex-col items-center p-4 font-mono border-solid border-4 border-gray-400 rounded-sm myshadow' >
             <div className='border-red-200'>
                 <p className='text-right italic'>Federico Girotti</p>
                 <img src='https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2018/08/fondos-pantalla-full-hd-animales_4.jpg'
