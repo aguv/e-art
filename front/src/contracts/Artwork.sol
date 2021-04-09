@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol"
-import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract Artwork is ERC721, IERC721Enumerable {
+ contract Artwork is ERC721 {
   string[] public artworks;
   mapping(string => bool) _artworkExists;
 
-  constructor() ERC721("Artwork", "ARTWORK") {
+  constructor() public ERC721("Artwork", "ARTWORK") {
   }
 
   function mint(string memory _artwork) public {
