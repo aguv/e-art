@@ -10,9 +10,10 @@ import PopupForm from './components/PopupForm';
 function App() {
   const [account, setAccount] = useState("")
   const [contract, setContract] = useState(null)
-  const [artworks, setArtowrks] = useState([])
+  const [artworks, setArtworks] = useState([])
   const [totalSupply, setTotalSupply] = useState(0)
   const [popup, setPopup] = useState(false)
+  const [address, setAddress] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -33,7 +34,6 @@ function App() {
       window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
     }
   }
-
   const loadBlockchainData = async () => {
     const web3 = window.web3
 
@@ -44,37 +44,50 @@ function App() {
     const networkData = Artwork.networks[networkId]
     if (networkData) {
       const abi = Artwork.abi
-      const address = networkData.address
+      setAddress(()=> networkData.address)
       const contract = new web3.eth.Contract(abi, address)
       setContract(contract)
-      console.log(contract)
       // const totalSupply = await contract.methods.totalSupply().call()
       // setTotalSupply(totalSupply)
 
       for (var i = 1; i <= totalSupply; i++) {
         const artwork = await contract.methods.artworks(i - 1).call()
-        setArtowrks([...artworks, artwork])
+        setArtworks([...artworks, artwork])
+
       }
+      console.log(contract, 'CONTRACT')
     } else {
+      console.log(networkId)
       window.alert('Smart contract not deployed to detected network.')
     }
   }
 
   const handlePopup = () => {
+    
     setPopup(popUp => !popUp);
   }
 
   const mint = (artwork) => {
+    console.log(contract, 123123123)
     contract.methods.mint(artwork).send({ from: account })
       .once('receipt', (receipt) => {
-        setArtowrks([...artworks, artwork])
+        setArtworks([...artworks, artwork])
       })
-  }
+    }
+    useEffect(()=> {
+      // contract address 0x650A2F4e3334DaD5Bc90Be53E4deF31EE7866297
+      // account 0x1dA1c6b78da655ef89903Dd97697d98fE3c9dE01
+      // tx hash 0x276bbc6f1c0143dda9d3db6924f7e24285deba7382279ab0f52ff129379b9688
+      console.log(artworks, 'artworks')
+      console.log(contract, 'contract')
+      console.log(account, 'account')
+      
+    }, [setArtworks, setContract, setAccount])
 
   return (
     <div className='bg-secondary w-auto min-h-full pb-20'>
       <Layout handlePopup={handlePopup} />
-      {popup ? <PopupForm handlePopup={handlePopup} /> : null}
+      {popup ? <PopupForm mint={mint} address={address} handlePopup={handlePopup} /> : null}
       <Switch>
         <Route path='/product/:id' render={({ match }) => <SingleView id={match.params.id} />} />
         <Route path='/' exact render={() => <HomePage mint={mint} />} />
