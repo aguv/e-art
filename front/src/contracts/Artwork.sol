@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
   constructor() public ERC721("Artwork", "ARTWORK") {
   }
-
+  
   function mint(string memory _artwork) public {
     require(!_artworkExists[_artwork]);
     artworks.push(_artwork);

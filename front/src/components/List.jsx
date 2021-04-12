@@ -10,8 +10,8 @@ const List = () => {
             <p className='font-mono mb-3'>Lorem ipsum</p>
             <hr />
             <div className='bg-secondary w-11/12 mx-auto flex overflow-x-scroll'>
-                {arr.map(() => (
-                    <Card />
+                {arr.map((_, i) => (
+                    <Card key={i} />
                 ))}
             </div>
         </div>
