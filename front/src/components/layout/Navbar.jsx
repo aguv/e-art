@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Navbar = ({handlePopup}) => {
+const Navbar = ({handlePopup, handleWallet}) => {
     return (
         <div className='bg-red-400 text-gray-100 px-10 h-20 w-auto items-center justify-between shadow-lg flex border-b-2 border-red-700'>
             <Link className='text-4xl' to='/'>E-Art</Link>
@@ -12,8 +12,11 @@ const Navbar = ({handlePopup}) => {
                 <button className='border-b-4 border-red-400 hover:border-red-800 flex items-center mr-8'>
                     <p className='text-lg'>About us</p>
                 </button>
-                <button className='border-b-4 border-red-400 hover:border-red-800 flex items-center' onClick={handlePopup}>
+                <button className='border-b-4 border-red-400 hover:border-red-800 flex items-center mr-8' onClick={handlePopup}>
                     <p className='text-lg'>Submit token</p>
+                </button>
+                <button className='border-b-4 border-red-400 hover:border-red-800 flex items-center'  onClick={handleWallet} >
+                    <p className='text-lg'>Connect wallet</p>
                 </button>
             </div>
         </div>
