@@ -18,8 +18,11 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
+const infuraKey = "ef2f784e2bd845769dacaa9046eb76c3";
+const mnemonicPhrase =
+  "polar parade census story suffer option sail industry curious face planet couch";
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const Web3 = require("web3");
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
@@ -36,17 +39,31 @@ module.exports = {
    */
 
   networks: {
-    // Useful for testing. The `development` name is special - truffle uses it by default
-    // if it's defined here and no other network is specified at the command line.
-    // You should run a client (like ganache-cli, geth or parity) in a separate terminal
-    // tab if you use this network and you must also set the `host`, `port` and `network_id`
-    // options below to some value.
-    //
+    /*    provider = new HDWalletProvider({
+      mnemonic: {
+        phrase: mnemonicPhrase
+      },
+      providerOrUrl:
+      pollingInterval: 8000
+    }); */
     development: {
-    //  host: "127.0.0.1",     // Localhost (default: none)
-    //  port: 8545,            // Standard Ethereum port (default: none)
-    //  network_id: "*",       // Any network (default: none)
-    // },
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "*",
+    },
+
+    kovan: {
+      provider: () =>
+        new HDWalletProvider(
+          mnemonicPhrase,
+
+          `https://kovan.infura.io/v3/ef2f784e2bd845769dacaa9046eb76c3`
+        ),
+      port: 8545,
+      network_id: 42,
+      gas: 4612388,
+    },
+
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -73,16 +90,16 @@ module.exports = {
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
   },
-
   // Set default mocha options here, use special reporters etc.
   mocha: {
     // timeout: 100000
   },
-
+  contracts_directory: "./src/contracts",
+  contracts_build_directory: "./src/abis/",
   // Configure your compilers
   compilers: {
     solc: {
-      // version: "0.8.0",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.0", // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
@@ -91,7 +108,7 @@ module.exports = {
       //  },
       //  evmVersion: "byzantium"
       // }
-    }
+    },
   },
 
   // Truffle DB is currently disabled by default; to enable it, change enabled: false to enabled: true
@@ -101,6 +118,6 @@ module.exports = {
   // $ truffle migrate --reset --compile-all
 
   db: {
-    enabled: false
-  }
+    enabled: false,
+  },
 };
