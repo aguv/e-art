@@ -6,10 +6,11 @@ import uploadToPinata from '../utils/uploadToPinata';
 require('dotenv').config();
 const {API_KEY, API_SECRET} = process.env;
 
-const Popup = ({ handlePopup, address, mint }) => {
+//ACÁ NO LE ESTÁ LLEGANDO EL ADDRESS DEL CONTRATO
+const Popup = ({ handlePopup, walletAccount, mint }) => {
     const [selectedFile, setSelectedFile] = useState(null)
     const [tokenData, setTokenData] = useState({title: null,
-                                                address,
+                                                walletAccount,
                                                 price: null
                                             })
 
@@ -67,7 +68,7 @@ const Popup = ({ handlePopup, address, mint }) => {
                     <form className='flex flex-col flex-1 justify-between'>
                         <div className='flex flex-col flex-1 justify-around'>
                             <input type="text" name="title" placeholder="Title" onChange={(e)=> handleChange(e)} className='p-2 border-2 border-gray-400 rounded-md'></input>
-                            <input type="text" name="address" style={{'color': 'grey', 'fontSize': '0.6em', 'height': '45px'}} placeholder="Address" disabled value={`address: ${address}`} className='p-2 border-2 border-gray-400 rounded-md'></input>
+                            <input type="text" name="address" style={{'color': 'grey', 'fontSize': '0.6em', 'height': '45px'}} placeholder="Address" disabled value={`address: ${walletAccount}`} className='p-2 border-2 border-gray-400 rounded-md'></input>
                             <input tyoe="text" name="price" placeholder="Price" onChange={(e)=> handleChange(e)} className='p-2 border-2 border-gray-400 rounded-md'></input>
                             <input type="file" onChange={fileSelectedHandler} />
                         </div>
