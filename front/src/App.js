@@ -10,6 +10,7 @@ import PopupForm from "./components/PopupForm";
 function App() {
   //va a recibir la data de la cta conectada a MetaMask a través de un pedido asíncrono a la blockchain
   const [accounts, setAccount] = useState("");
+  const [loaded, setLoaded] = useState(false)
   const [artworkName, setArtworkName] = useState(""); //va a ser el nombre string con el que vamos a mintear el token en el contract
   const [popup, setPopup] = useState(false);
   const [localContract, setLocalContract] = useState("");
@@ -27,9 +28,11 @@ function App() {
     const deployedNetwork = Artwork.networks[networkId];
     const abi = Artwork.abi;
     const artworkInstance = new web3.eth.Contract(abi, deployedNetwork.address); //ACÁ LLAMAMOS A Contract --> CONSTRUCTOR DE WEB3 CON LOS DATOS DE NUESTRO CONTRATO como parámetro
+  console.log(artworkInstance, "ADENTRO DE INTERACT");
     setLocalContract(artworkInstance);
     setAddressLocalContract(deployedNetwork.address);
     console.log(deployedNetwork.address, "address del contrato");
+
   };
 
   console.log(localContract, "lo llamo acá afuera y existe");
@@ -39,24 +42,33 @@ function App() {
   );
 
   const mint = async () => {
-    console.log(localContract);
- 
-    if(localContract && addressLocalContract) {
-    await localContract.methods
-      .mint(artworkName)
-      .send({ from: accounts })
+/* 
+    console.log(Object.keys(localContract.__proto__));
+    console.log(localContract.methods.mint("aaba").call({from: "0xF3A84803557DBcDf7260bc45bE7D444fb21aEeA6"  })
+    .then((result) => console.log(result)))  */
+
+//console.log(accounts)
+/* console.log(localContract, "ADENTRO DE MINTTTTT")
+      await localContract.methods
+      .mint("ab")
+      .send({ from: "0xF3A84803557DBcDf7260bc45bE7D444fb21aEeA6" })
       .once("receipt", (receipt) => {
-        setArtworkName(artworkName);
-      }); 
+         setArtworkName(artworkName); 
+      });   */
 
-    }
-    else {
-      console.log("no está minteando bien")
-    }
-   
-   
+if(localContract) {
+  const receipt = await localContract.methods.mint("1").send({from: accounts})
+  console.log(receipt, "RECEIPTTTTTTT WTF")
+  return receipt
+}
 
+
+
+
+    
+    
   };
+  
 
   const getBlockChainData = async () => {
     const accounts = await web3.eth.getAccounts(); //esta sintaxis hace pedidos asíncronos a la blockchain a través de la api de web3
@@ -79,20 +91,30 @@ function App() {
     }
   };
 
+  //console.log(localContract, "LLLEEEEGA")
   useEffect(() => {
-    (async () => {
+  //  if(localContract) {
+    //  console.log("llega a este if con localContract")
+      //(async() => await mint()) ()
+      
+   // } 
+
+    (async() => {
       await loadWeb3();
       await getBlockChainData();
-      await interactArtwork();
-     // await mint(); //--> si llamo a mint pero no le pido que se fije si hay un cambio en el estado de local contract, no mintea. Pero si paso localContract, se rompe ¿why?
-    })();
+      await interactArtwork()
+      await mint()
+      
+     
+    }) () 
   }, []);
 
-     useEffect(() => {
+    /*   useEffect(() => {
+
     (async () => {
       await mint();
     })();
-  }, [localContract]); 
+  }, [localContract]);  */ 
 
   const handlePopup = () => {
     setPopup((popUp) => !popUp);
@@ -103,7 +125,7 @@ function App() {
       <Layout handlePopup={handlePopup} /* handleWallet={handleWallet}  */ />
       {popup ? (
         <PopupForm
-          /*  mint={mint} */
+           mint={mint} 
           walletAccount={accounts}
           handlePopup={handlePopup}
         />
