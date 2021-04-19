@@ -31,10 +31,10 @@ const SingleView = ({web3, hash, arbitrableInstance, artworkAddress, currentAcco
             .send(
                 { from: currentAccount,
                    gasPrice: 21000,
-                   value: web3.utils.utf8ToHex(500)
+                   value: web3.utils.toWei('0.05', "ether")
                 })
-            .then(x=>console.log(x))
-            .catch(y=>console.log(y))
+            .then(x=>console.log(x, 'then'))
+            .catch(y=>console.log(y, 'error'))
             // .once()
             
         
