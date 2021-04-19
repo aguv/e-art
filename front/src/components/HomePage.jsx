@@ -8,7 +8,7 @@ const HomePage = () => {
 
         return (
         <div className=''>
-            <h1 class='font-mono text-8xl text-center text-primary'>E-Art</h1>
+            <h1 className='font-mono text-8xl text-center text-primary'>E-Art</h1>
             <CustomCarousel />
             <List urls={urls} />
             {/* <List urls={urls}/> */}

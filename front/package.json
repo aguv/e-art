@@ -16,6 +16,7 @@
     "@truffle/hdwallet-provider": "^1.2.6",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
+    "keccak256": "^1.0.2",
     "path": "^0.12.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -30,7 +31,8 @@
     "redux-logger": "^3.0.6",
     "truffle": "^5.3.0",
     "web-vitals": "^1.1.1",
-    "web3": "^1.3.5"
+    "web3": "^1.3.5",
+    "web3-utils": "^1.3.5"
   },
   "scripts": {
     "start": "react-dotenv && craco start",
