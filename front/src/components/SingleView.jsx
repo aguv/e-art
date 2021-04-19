@@ -2,7 +2,6 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEthereum } from '@fortawesome/free-brands-svg-icons'
 import { useSelector } from "react-redux";
-import keccak256 from 'keccak256'
 import { soliditySha3 } from "web3-utils";
 
 
@@ -30,8 +29,7 @@ const SingleView = ({web3, hash, arbitrableInstance, artworkAddress, currentAcco
             )
             .send(
                 { from: currentAccount,
-                   gasPrice: 21000,
-                   value: web3.utils.toWei('0.05', "ether")
+                   value: web3.utils.toWei('0.5', "ether"),
                 })
             .then(x=>console.log(x, 'then'))
             .catch(y=>console.log(y, 'error'))

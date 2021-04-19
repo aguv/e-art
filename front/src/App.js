@@ -62,15 +62,16 @@ function App() {
     const deployedNetwork = Artwork.networks[networkId];
     const abi = Artwork.abi;
     const artworkInstance = new web3.eth.Contract(abi, deployedNetwork.address);
-
+    
     
     setLocalContract(artworkInstance);
     
     
-
+    
     const deployedNetwork2 = ArbitrableTokenList.networks[networkId];
     const abi2 = ArbitrableTokenList.abi;
     const arbitrableTokenListInstance = new web3.eth.Contract(abi2, deployedNetwork2.address);
+    console.log(ArbitrableTokenList)
     setArbitrableInstance(
       { instance: arbitrableTokenListInstance,
         abi: abi2
