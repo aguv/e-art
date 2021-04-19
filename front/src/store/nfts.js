@@ -57,8 +57,6 @@ export const getTokensFromPinata = createAsyncThunk(
 				},
 			})
 			.then(({data: {rows}}) => {
-				console.log(rows, "getTokensFromPinata reducer");
-
 				return rows;
 			});
 	}

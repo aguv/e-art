@@ -23,6 +23,9 @@ const mnemonicPhrase =
   "polar parade census story suffer option sail industry curious face planet couch";
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const Web3 = require("web3");
+
+
+
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();

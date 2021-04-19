@@ -2,14 +2,52 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEthereum } from '@fortawesome/free-brands-svg-icons'
 import { useSelector } from "react-redux";
+import keccak256 from 'keccak256'
+import { soliditySha3 } from "web3-utils";
 
-const SingleView = ({hash}) => {
+
+
+const SingleView = ({web3, hash, arbitrableInstance, artworkAddress, currentAccount}) => {
     const nfts = useSelector(state => state.nfts)
     function getTokenData (hash) {
         return nfts.find(x=>x.ipfs_pin_hash===hash)
     }
     const nft = getTokenData(hash)
 
+    const { instance, abi } = arbitrableInstance;
+    const handleDispute = () => {
+        
+        const id = soliditySha3(hash,
+            0,
+            artworkAddress,
+            0)
+        instance.methods
+            .requestStatusChange(
+                hash,
+                0, 
+                artworkAddress, 
+                0 
+            )
+            .send(
+                { from: currentAccount,
+                   gasPrice: 21000,
+                   value: web3.utils.toWei('0.05', "ether")
+                })
+            .then(x=>console.log(x, 'then'))
+            .catch(y=>console.log(y, 'error'))
+            // .once()
+            
+        
+        // const id = keccak256( //podemos acceder aca desde el front
+        //             abi.encodePacked(
+        //                 hash, //hash
+        //                 0,
+        //                 artworkAddress, //address de ctto Artwork
+        //                 0
+        //             ))
+        // arbitrableInstance.methods.challengeRequest
+                    
+    }
     return (
         <div className='bg-gray-300 w-6/12 h-screen mx-auto flex flex-col items-center p-4 font-mono border-solid border-4 border-gray-400 rounded-sm myshadow' >
             <div className='border-red-200'>
@@ -31,13 +69,14 @@ const SingleView = ({hash}) => {
                     <button className='bg-red-300 w-2/12 border-solid rounded-sm border-2 border-gray-700 mx-6 p-1 hover:bg-gray-700 hover:text-red-200'>
                         BUY
                     </button>
-                    <button className='bg-red-300 w-2/12 border-solid rounded-sm border-2 border-gray-700 p-1 hover:bg-gray-700 hover:text-red-200'>
+                    <button onClick={handleDispute} className='bg-red-300 w-2/12 border-solid rounded-sm border-2 border-gray-700 p-1 hover:bg-gray-700 hover:text-red-200'>
                         DISPUTE
                     </button>
                 </div>
             </div>
         </div>
     )
+    
 }
 
 export default SingleView
